@@ -1,0 +1,54 @@
+---
+title       : Houston Rockets Shot Charts
+subtitle    : 2014-2015 Season pre All Star Break
+author      : bsneish
+job         : 
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
+
+## Generate Shot Chart
+
+Select a player on the Houston Rockets
+
+Choose a period or multiple periods
+
+red/0 are misses
+
+green/1 are makes
+
+--- .class #id 
+
+## ggplot2
+
+Charts generated with ggplot2
+
+```r
+library(ggplot2)
+library(png)
+court <- readPNG('court.png')
+hou<-read.csv("shotsHou.csv")
+```
+
+---
+
+## Shot Charts
+
+```r
+ggplot(hou[hou$PlayerName=="James Harden" & hou$Period %in% c(1,2,3,4,5),], aes(X.Coord,Y.Coord))+ annotation_raster(court, xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf) +geom_point(aes(col=as.factor(ShotMadeDummy)))+ coord_fixed(ratio=1,xlim = c(-250, 250),ylim=c(-52.5,417.5))
+```
+
+![plot of chunk unnamed-chunk-2](assets/fig/unnamed-chunk-2-1.png) 
+
+---
+
+## Data
+
+Data scraped from nba.com by modifying script by Michael Dickey
+http://www4.stat.ncsu.edu/~post/sports/
+
+
